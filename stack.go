@@ -33,7 +33,7 @@ func (s *Stack) Push(v interface{}) error {
 		if s.capacity > s.maxCapacity {
 			s.capacity = s.maxCapacity
 		}
-		newContent := make([]interface{}, 0, s.capacity)
+		newContent := make([]interface{}, s.cLength+1, s.capacity)
 		copy(newContent, s.content)
 		s.content = newContent
 	}
