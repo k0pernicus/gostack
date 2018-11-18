@@ -17,10 +17,11 @@ func NewStack(capacity uint) Stack {
 	if capacity > maxCapacity {
 		maxCapacity = capacity
 	}
+	// Avoid 'append' call for each Push, in declaring size == capacity
 	return Stack{
 		capacity:    capacity,
 		cLength:     0,
-		content:     make([]interface{}, 0, capacity),
+		content:     make([]interface{}, capacity, capacity),
 		maxCapacity: maxCapacity}
 }
 
@@ -33,11 +34,11 @@ func (s *Stack) Push(v interface{}) error {
 		if s.capacity > s.maxCapacity {
 			s.capacity = s.maxCapacity
 		}
-		newContent := make([]interface{}, s.cLength+1, s.capacity)
+		newContent := make([]interface{}, s.capacity, s.capacity)
 		copy(newContent, s.content)
 		s.content = newContent
 	}
-	s.content = append(s.content, v)
+	s.content[s.cLength] = v
 	s.cLength++
 	return nil
 }
